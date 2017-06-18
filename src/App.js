@@ -18,6 +18,7 @@ class App extends Component {
         <p>{this.state.contentText}</p>*/}
         <Header />
         < Content />
+        <Clock />
       </div>
     );
   }
@@ -90,5 +91,43 @@ class TableRow extends Component{
     );
   }
 }
+
+class Clock extends Component{
+  constructor(props){
+    super(props);
+
+    this.state = {date: new Date()};
+  }
+
+  componentDidMount(){
+    this.timeId = setInterval(
+      () => {this.tick()},
+      1000
+    )
+  }
+
+  tick(){
+    this.setState({date: new Date()});
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.timeId);
+  }
+
+  render(){
+    return(
+      <div>
+        <h1>Hello World!</h1>
+        <h2>The current time is: {this.state.date.toLocaleTimeString()}</h2>
+      </div>
+    );
+  }
+}
+
+
+//setInterval(tick, 1000);
+
+
+
 
 export default App;
