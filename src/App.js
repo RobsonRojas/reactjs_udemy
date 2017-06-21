@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
 
@@ -43,46 +44,50 @@ class Header extends Component{
 }
 
 class Content extends Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      data: [],
+      counter: 0
+    };
+
+    this.updateMyState = this.updateMyState.bind(this);
+    this.forceUpdateRandomNumber = this.forceUpdateRandomNumber.bind(this);
+    this.findMyDomNode = this.findMyDomNode.bind(this)
+  }
+  updateMyState() {
+      var count = this.state.counter;
+      count++;
+      var item = "Click -" + count;
+      var myArray = this.state.data;
+      myArray.push(item);
+
+      this.setState({
+        data: myArray,
+        counter: count
+      })
+  }
+  forceUpdateRandomNumber(){
+    this.forceUpdate();
+  }
+  findMyDomNode(){
+    var myDiv = document.getElementById('myDiv');
+    ReactDOM.findDOMNode(myDiv).style.color = 'red';
+  }
   render(){
     return(
-      <div>
-        <div className="App-intro">
-          <h1>What is component</h1>
-          <p>In this lecture, we will go over the Component</p>
-        </div>
-        <div>
-          <h4>Array: {this.props.propArray}</h4>
-          <h4>Bool: {this.props.propBool ? "True": "False"}</h4>
-          <h4>Function: {this.props.propFunc(5)}</h4>
-          <h4>Number: {this.props.propNumber}</h4>
-          <h4>String: {this.props.propString}</h4>
-          <h4>Object: {this.props.propObject.objectName1}</h4>
-
-        </div>
+      <div className="App-intro">
+        <h1>Components API!</h1>
+        <p>In this lecture, we will go over the ComponentS API</p>
+        <button onClick={this.updateMyState}>Click Me</button>
+        <h4>State data: {this.state.data}</h4>
+        <button onClick={this.forceUpdateRandomNumber}>Random Number</button>
+        <h4>Random number: {Math.random()}</h4>
+        <button onClick={this.findMyDomNode}>Find my Dom Node</button>
+        <div id="myDiv">this is my div</div>
       </div>
     );
-  }
-}
-
-Content.propTypes ={
-  propArray: React.PropTypes.array.isRequired,
-  propBool: React.PropTypes.bool.isRequired,
-  propFunc: React.PropTypes.func,
-  propNumber: React.PropTypes.number,
-  propString: React.PropTypes.string,
-  propObject: React.PropTypes.object
-}
-
-Content.defaultProps = {
-  propArray: [1,2,3,4],
-  propBool: true,
-  propFunc: function(e){return e},
-  propNumber: 1,
-  propString: "String value ...",
-  propObject: {
-    objectName1: "objectValue1",
-    objectName2: "objectValue2",
-    objectName3: "objectValue3"
   }
 }
 
